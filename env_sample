@@ -1,0 +1,7 @@
+USERNAME=ssh_username
+PASSWORD=ssh_username
+HOST=ssh_host
+PORT=ssh_host_port
+BASEPATH=deployment_basediretory
+LOCAL_STORYFOLDER=storybook_folder_to_deploy
+APPFOLDER=

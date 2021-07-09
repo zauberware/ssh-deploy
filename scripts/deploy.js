@@ -29,19 +29,6 @@ const deployStorybook = () => {
       storyBookFolder,
       buildFolder,
     } = getEnvironmentData(env);
-    console.log(
-      "%cstoryBookFolder,buildFolder,deployPath:",
-      "color: lime; font-size: 1.125rem;",
-      {
-        basePath,
-        deployPath,
-        fullDeployPath,
-        logPath,
-        sshConfig,
-        storyBookFolder,
-        buildFolder,
-      }
-    );
     const config = {
       userConfig: {
         basePath: fullDeployPath,

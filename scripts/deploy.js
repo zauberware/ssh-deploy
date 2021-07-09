@@ -52,15 +52,12 @@ const deployStorybook = () => {
       },
       sshConfig,
     };
-    console.log(path.join("~/", deployPath));
-    console.log(config);
-    console.log(process.env.BUILD_ENV.toUpperCase());
-    // zipFile(env === "STORYBOOK" ? storyBookFolder : buildFolder, tempFile).then(
-    //   () =>
-    //     upload(config, () => {
-    //       unzip(config).then(() => cleanup());
-    //     })
-    // );
+    zipFile(env === "STORYBOOK" ? storyBookFolder : buildFolder, tempFile).then(
+      () =>
+        upload(config, () => {
+          unzip(config).then(() => cleanup());
+        })
+    );
   } catch (error) {
     if (error) throw error;
   }

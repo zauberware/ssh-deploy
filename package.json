@@ -1,5 +1,5 @@
 {
-  "name": "deploy",
+  "name": "@zauberware/ssh-deploy",
   "version": "0.0.1",
   "description": "a simple tool for deployment over ssh",
   "main": "lib/",

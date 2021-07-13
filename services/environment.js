@@ -1,5 +1,9 @@
 const path = require("path");
 
+const getUser = require("./git");
+
+const tempFile = path.join(process.env.npm_config_env, "release.zip");
+
 const getBasePath = (environment) =>
   process.env[`${environment}_HOST_BASEPATH`] ||
   process.env.DEFAULT_HOST_BASEPATH ||
@@ -53,6 +57,7 @@ const getAllPaths = (environment) => ({
   storyBookFolder: getStoryBookFolder(),
   buildFolder: getBuildFolder(),
 });
+
 const getEnvironmentData = (environment) => ({
   basePath: getBasePath(environment),
   deployPath: getDeployPath(environment),
@@ -61,8 +66,52 @@ const getEnvironmentData = (environment) => ({
   sshConfig: getSshConfig(environment),
   storyBookFolder: getStoryBookFolder(),
   buildFolder: getBuildFolder(),
+  gitUser: getUser(),
+  tempFile,
 });
 
+const checkEnvironment = () => {
+  let envOk = false;
+  if (
+    process.env["DEFAULT_USERNAME"] &&
+    process.env["DEFAULT_PASSWORD"] &&
+    process.env["DEFAULT_HOST"] &&
+    process.env["DEFAULT_PORT"] &&
+    process.env["DEFAULT_HOST_BASEPATH"]
+  ) {
+    envOk = true;
+  }
+  if (
+    process.env["STORYBOOK_USERNAME"] &&
+    process.env["STORYBOOK_PASSWORD"] &&
+    process.env["STORYBOOK_HOST"] &&
+    process.env["STORYBOOK_PORT"] &&
+    process.env["STORYBOOK_HOST_BASEPATH"]
+  ) {
+    envOk = true;
+  }
+  if (
+    process.env["STAGING_USERNAME"] &&
+    process.env["STAGING_PASSWORD"] &&
+    process.env["STAGING_HOST"] &&
+    process.env["STAGING_PORT"] &&
+    process.env["STAGING_HOST_BASEPATH"]
+  ) {
+    envOk = true;
+  }
+  if (
+    process.env["PRODUCTION_USERNAME"] &&
+    process.env["PRODUCTION_PASSWORD"] &&
+    process.env["PRODUCTION_HOST"] &&
+    process.env["PRODUCTION_PORT"] &&
+    process.env["PRODUCTION_HOST_BASEPATH"]
+  ) {
+    envOk = true;
+  }
+  return envOk;
+};
+
+module.exports.checkEnvironment = checkEnvironment;
 module.exports.getAllPaths = getAllPaths;
 module.exports.getBasePath = getBasePath;
 module.exports.getDeployPath = getDeployPath;

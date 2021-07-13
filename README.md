@@ -58,6 +58,11 @@ server {
 ## .env
 
 Configure and put these env variables to your .env file.
+Or use the gui for the basic configuration
+
+```
+ENV_MODE=init npm explore @zauberware/ssh-deploy -- npm run sshDeploy --env=$PWD
+```
 
 ### Sample
 
@@ -137,7 +142,7 @@ Overview of possible .env key=value options
 Put these scripts into your root package.json
 
 ```
-"deploy-storybook":"BUILD_ENV=storybook npm explore @zauberware/ssh-deploy -- npm run deploy --env=$PWD",
-"deploy-staging":"BUILD_ENV=staging npm explore @zauberware/ssh-deploy -- npm run deploy --env=$PWD",
-"deploy-production":"BUILD_ENV=production npm explore @zauberware/ssh-deploy -- npm run deploy --env=$PWD"
+"deploy": "ENV_MODE=deploy npm explore @zauberware/ssh-deploy -- npm run sshDeploy --env=$PWD",
+"rollback": "ENV_MODE=rollback npm explore @zauberware/ssh-deploy -- npm run sshDeploy --env=$PWD",
+"sshDeploy": "npm explore @zauberware/ssh-deploy -- npm run sshDeploy --env=$PWD",
 ```

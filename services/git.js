@@ -1,4 +1,4 @@
-const exit = require("process").exit;
+const { exit } = require("process");
 const gitConfig = require("git-config");
 
 const getUser = () => {

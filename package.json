@@ -7,9 +7,20 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "sshDeploy": "node scripts/sshDeploy.js"
   },
-  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zauberware/ssh-deploy"
+  },
+  "keywords": [
+    "ssh",
+    "deploy"
+  ],
   "author": "",
   "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zauberware/ssh-deploy/issues"
+  },
+  "homepage": "https://github.com/zauberware/ssh-deploy#readme",
   "dependencies": {
     "adm-zip": "^0.5.5",
     "chalk": "^2.4.2",

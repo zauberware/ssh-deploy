@@ -1,18 +1,22 @@
 const inquirer = require("inquirer");
 module.exports = {
-  askEnv: () => {
+  askEnv: (availableEnvs) => {
+    let choices = [
+      { name: "Staging", value: "staging" },
+      { name: "Production", value: "production" },
+      { name: "Storybook", value: "storybook" },
+      { name: "Abort", value: "abort" },
+    ];
+    choices = choices.filter(
+      (c) => c.name === "Abort" || availableEnvs.includes(c.value)
+    );
     const questions = [
       {
         type: "list",
         name: "environment",
         message: "Select environment:",
-        choices: [
-          { name: "Staging", value: "staging" },
-          { name: "Production", value: "production" },
-          { name: "Storybook", value: "storybook" },
-          { name: "Abort", value: "abort" },
-        ],
-        default: "staging",
+        choices,
+        default: choices[0],
       },
       {
         type: "confirm",

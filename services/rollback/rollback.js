@@ -5,7 +5,10 @@ const { exit } = require("process");
 process.chdir(process.env.npm_config_env);
 const path = require("path");
 const moment = require("moment");
-const { getEnvironmentData } = require("../environment");
+const {
+  getEnvironmentData,
+  getAvailableEnvironments,
+} = require("../environment");
 const { askRollback, askEnv } = require("./surveys");
 const prompt = require("../prompt/prompt");
 const getRollbacks = require("../getRollbacks");
@@ -14,7 +17,11 @@ const currentDate = `${moment().format("YYYY-MM-DD[T]HH.mm.ss")}`;
 
 const rollback = () => {
   const getEnv = async () => {
-    const { environment } = await prompt("Rollback", askEnv).then((res) => {
+    const { environment } = await prompt(
+      "Rollback",
+      askEnv,
+      getAvailableEnvironments()
+    ).then((res) => {
       return res;
     });
     if (environment === "abort") {

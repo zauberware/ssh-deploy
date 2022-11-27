@@ -7,7 +7,10 @@ process.chdir(process.env.npm_config_env);
 const path = require("path");
 const moment = require("moment");
 const cleanup = require("../cleanup");
-const { getEnvironmentData } = require("../environment");
+const {
+  getEnvironmentData,
+  getAvailableEnvironments,
+} = require("../environment");
 const getUser = require("../git");
 const unzip = require("../unzip");
 const upload = require("../upload");
@@ -19,7 +22,13 @@ const { askEnv } = require("./surveys");
 const { exit } = require("process");
 const deploy = () => {
   const getEnv = async () => {
-    const { environment } = await prompt("Deploy", askEnv).then((res) => {
+    console.log(getEnvironmentData("staging"));
+    process.exit();
+    const { environment } = await prompt(
+      "Deploy",
+      askEnv,
+      getAvailableEnvironments()
+    ).then((res) => {
       return res;
     });
     if (environment === "abort") {

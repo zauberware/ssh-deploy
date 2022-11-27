@@ -19,19 +19,27 @@ const init = async () => {
     return await prompt("Init", askEnvData, { envs: ["default"] });
   };
   return await first()
-    .then((res) => {
+    .then(async (res) => {
       if (res.multiServer) {
         return second(res.envs);
       }
-      return second([]);
+      const data = await second([]);
+      console.log("%cdata:", "color: lime; font-size: 1.125rem;", data);
+      return { envs: res.envs, data };
     })
     .then((res) => {
-      const envpath = path.join(process.env.npm_config_env, res.envfile);
+      const envpath = path.join(process.env.npm_config_env, res.data.envfile);
       const fileStream = fs.createWriteStream(envpath, { flags: "a" });
+      const { envs } = res;
       fileStream.write(
-        `\n${Object.keys(res)
+        envs
+          ? `DEPLOY_ENVIRONMENTS=${envs.join(",")}`
+          : "DEPLOY_ENVIRONMENTS=default"
+      );
+      fileStream.write(
+        `\n${Object.keys(res.data)
           .filter((key) => key !== "envfile")
-          .map((key) => `${key}=${res[key]}`)
+          .map((key) => `${key}=${res.data[key]}`)
           .join("\n")}`
       );
       fileStream.end();

@@ -70,6 +70,16 @@ const getEnvironmentData = (environment) => ({
   tempFile,
 });
 
+const getAvailableEnvironments = () => {
+  const validEnvironments = ["staging", "production", "storybook", "default"];
+
+  let environments = (process.env.DEPLOY_ENVIRONMENTS &&
+    process.env.DEPLOY_ENVIRONMENTS.split(",")) || [""];
+  environments = environments.filter((e) => validEnvironments.includes(e));
+  environments = environments.length < 1 ? false : environments;
+  return environments;
+};
+
 const checkEnvironment = () => {
   let envOk = false;
   if (
@@ -108,6 +118,7 @@ const checkEnvironment = () => {
   ) {
     envOk = true;
   }
+  envOk = getAvailableEnvironments().length ? true : false;
   return envOk;
 };
 
@@ -119,3 +130,4 @@ module.exports.getFullDeployPath = getFullDeployPath;
 module.exports.getSshConfig = getSshConfig;
 module.exports.getLogFolder = getLogFolder;
 module.exports.getEnvironmentData = getEnvironmentData;
+module.exports.getAvailableEnvironments = getAvailableEnvironments;
